@@ -272,6 +272,25 @@
     });
   }
 
+  /* ---------------- Pricing maintenance toggle ---------------- */
+  const billingToggle = document.getElementById('billing-toggle');
+  if(billingToggle){
+    const opts = billingToggle.querySelectorAll('.toggle-opt');
+    const prices = document.querySelectorAll('.maint-price');
+    function setBilling(mode){
+      billingToggle.classList.toggle('yearly', mode === 'yearly');
+      opts.forEach(o => {
+        const active = o.dataset.billing === mode;
+        o.classList.toggle('active', active);
+        o.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      prices.forEach(p => {
+        p.textContent = mode === 'yearly' ? p.dataset.yearly : p.dataset.monthly;
+      });
+    }
+    opts.forEach(o => o.addEventListener('click', () => setBilling(o.dataset.billing)));
+  }
+
   /* ---------------- Floating glow parallax ---------------- */
   if(!isTouch && !prefersReducedMotion){
     const glows = document.querySelectorAll('.bg-glow');
